@@ -5,9 +5,16 @@ class Funcionario: # classe mãe
         self.salario_fixo = salario_fixo
 
     # encapsulamento 
-    # @property
-    # def matricula(self):
-    #    return self.__matricula
+    @property
+    def matricula(self):
+       return self.__matricula
+   
+    @matricula.setter
+    def matricula(self, new_matricula):
+        if len(str(new_matricula)) != 6:
+            raise ValueError("A matrícula tem que ter 6 números.")
+        self.__matricula = new_matricula
+        
     @property
     def salario_fixo(self):
         return self.__salario_fixo
@@ -64,10 +71,13 @@ class Gerente(Funcionario):
     def exibir(self):
         return f'[GERENTE #{self.matricula}] {self.nome} - {self.calcular_salario()}'
     
+# criando os funcionários dentro da lista
+funcionarios = [
+    Gerente(nome='Emanuel', matricula='456789', salario_fixo=3000),
+    CLT(nome='Mariah', matricula='096782', salario_fixo=2000),
+    Vendedor(nome='Nicholas', matricula='028642', salario_fixo=2500, total_vendas=1500)
+]
 
-gerente = Gerente(nome='Emanuel', matricula='456789', salario_fixo=3000)
-clt = CLT(nome='Mariah', matricula='096789', salario_fixo=2000)
-vendedor = Vendedor(nome='Nicholas', matricula='028642', salario_fixo=2500, total_vendas=1500)
-
-for funcionario in Funcionario.objects():
-    
+for funcionario in funcionarios:
+    print(funcionario.exibir())
+    # padrão [TIPO_USUARIO #MATRICULA] NOME - R$ SALÁRIO
